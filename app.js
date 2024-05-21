@@ -10,7 +10,7 @@ const ELementDescription = document.querySelector(".child-suggestion p");
 
 const  callData = async()=>{
     try{
-        const url =`https://pixabay.com/api/?key=${myapiKey}&q=beauty+nature&image_type=photo&pretty=true`;
+        const url =`https://pixabay.com/api/?key=${myapiKey}&q=beauty+nature+wild&image_type=photo&pretty=true&per_page=24`;
         const response = await fetch(url);
         const data = await response.json();
         console.log(data.hits);
@@ -39,9 +39,38 @@ const displayContent = (hits)=>{
         creareDiv.appendChild(creareImage);        
         creareDiv.appendChild(creareDescript);
         parentSuggestion.appendChild(creareDiv);
+        creareDiv.addEventListener(`click`,()=>{
+            window.open(hit.pageURL, `_blank`);
+        })
 
     });
 }
+
+goButton.addEventListener(`click`, async()=>{
+    const yourQuery = searchInput.value.trim();
+    if(yourQuery!==""){
+        try{
+            const hits = await fetchSpecific(yourQuery);
+            displayContent(hits);
+        }catch(error){
+            console.log(`this is the fetching error where convert data in json formate`)
+        }
+    }
+})
+
+const fetchSpecific = async (yourQuery)=>{
+    try{
+        const newSpecificURL = `https://pixabay.com/api/?key=${myapiKey}&q=${yourQuery}&image_type=photo&pretty=true&per_page=24`;
+
+        const response = await fetch(newSpecificURL);
+        const data = await response.json();
+        return data.hits;
+    }catch(error){
+        console.log(`here showing some error from fetching spacific data`);
+    }
+}
+
+
 
 
 async function fetchDisplayAND (){
