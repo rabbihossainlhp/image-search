@@ -93,7 +93,8 @@ footer{
     align-items: center;
     margin-top: 80px;
     color: white;
-    position: absolute;
+    position:relative;
+    bottom: 0%;
 }
 footer h1,span,p{
     margin: 4px;
